@@ -43,6 +43,17 @@ public class ProductBasket {
         System.out.println("Итого: " + getCostBasket());
     }
 
+    // вызов метода подсчета количества товаров специального типа, с выводом сообщения в консоль в заданном виде
+    public void getCountSpecialProduct() {
+        int countSpecialProduct = 0;
+        for (int i = 0; i < basket.length; i++) {
+            if (basket[i] != null && basket[i].isSpecial()) {
+                countSpecialProduct++;
+            }
+        }
+        System.out.println("Специальных товаров: " + countSpecialProduct);
+    }
+
     //Метод, проверяющий продукт в корзине по имени: метод принимает в себя строку имени и возвращает boolean в зависимости от того, есть продукт в корзине или его нет.
     public boolean faindTitleProductBasket(String titleProduct) {
         for (int i = 0; i < basket.length; i++) {
