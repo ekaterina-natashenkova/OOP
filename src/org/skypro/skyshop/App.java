@@ -3,6 +3,8 @@ package org.skypro.skyshop;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
 
+import java.sql.SQLOutput;
+
 public class App {
     public static void main(String[] args) {
 
@@ -37,15 +39,15 @@ public class App {
 
         // Проверка корзины
         // п.5.6. // Поиск товара, который есть в корзине. // Поиск товара, которого нет в корзине.
-        basket.faindTitleProductBasket("чай");
-        basket.faindTitleProductBasket("кефир");
+        System.out.println(basket.faindTitleProductBasket("чай"));
+        System.out.println(basket.faindTitleProductBasket("кефир"));
 
         // Очистка корзины
         // п.7.8.9.10 //Очистка корзины. // Печать содержимого пустой корзины. // Получение стоимости пустой корзины. // Поиск товара по имени в пустой корзине.
         basket.clearBasket();
         basket.printBasket();
-        basket.getCostBasket();
-        basket.faindTitleProductBasket("чай");
+        System.out.println(basket.getCostBasket());
+        System.out.println(basket.faindTitleProductBasket("чай"));
     }
 
 }

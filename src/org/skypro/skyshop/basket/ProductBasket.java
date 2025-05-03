@@ -58,10 +58,9 @@ public class ProductBasket {
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] != null) {
                 basket[i] = null;
-                System.out.println("Корзина очищена");
-                return;
             }
         }
+        System.out.println("Корзина очищена");
     }
 
 }
