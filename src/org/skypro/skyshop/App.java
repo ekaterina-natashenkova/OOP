@@ -2,6 +2,9 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 
 import java.sql.SQLOutput;
 
@@ -9,12 +12,12 @@ public class App {
     public static void main(String[] args) {
 
         // Создание продуктов
-        Product product1 = new Product("чай", 200);
-        Product product2 = new Product("кофе", 450);
-        Product product3 = new Product("вода", 70);
-        Product product4 = new Product("сок", 150);
-        Product product5 = new Product("молоко", 120);
-        Product product6 = new Product("кефир", 130);
+        Product product1 = new SimpleProduct("чай", 200);
+        Product product2 = new SimpleProduct("кофе", 450);
+        Product product3 = new DiscountedProduct("вода", 100, 10);
+        Product product4 = new DiscountedProduct("сок", 150, 20);
+        Product product5 = new FixPriceProduct("молоко");
+        Product product6 = new FixPriceProduct("кефир");
 
         // Создание корзины
         ProductBasket basket = new ProductBasket();
@@ -33,9 +36,9 @@ public class App {
         basket.printBasket();
 
         // Общая стоимость корзины
-        // п.4 // Получение стоимости корзины с несколькими товарами.
+        // п.4 // Получение стоимости корзины с несколькими товарами. // ** Получение количества специальных товаров.
         basket.getCostBasket();
-        System.out.println(basket.getCostBasket());
+        basket.getCountSpecialProduct();
 
         // Проверка корзины
         // п.5.6. // Поиск товара, который есть в корзине. // Поиск товара, которого нет в корзине.
