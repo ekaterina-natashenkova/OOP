@@ -9,7 +9,6 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.sql.SQLOutput;
 import java.util.Arrays;
 
 public class App {
@@ -74,42 +73,40 @@ public class App {
         Searchable product12 = new FixPriceProduct("сок томатный");
 
         // Создание объекта SearchEngine для заполнения его товарами и статьями о них
-        SearchEngine searchEngine = new SearchEngine(20);
+        SearchEngine searchableObjects = new SearchEngine(20);
 
         // Добавление объектов в SearchEngine
-        searchEngine.add(product1);
-        searchEngine.add(product2);
-        searchEngine.add(product3);
-        searchEngine.add(product4);
-        searchEngine.add(product5);
-        searchEngine.add(product6);
-        searchEngine.add(product7);
-        searchEngine.add(product8);
-        searchEngine.add(product9);
-        searchEngine.add(product10);
-        searchEngine.add(product11);
-        searchEngine.add(product12);
-        searchEngine.add(article1);
-        searchEngine.add(article2);
-        searchEngine.add(article3);
-        searchEngine.add(article4);
-        searchEngine.add(article5);
-        searchEngine.add(article6);
-
+        searchableObjects.add(product1);
+        searchableObjects.add(product2);
+        searchableObjects.add(product3);
+        searchableObjects.add(product4);
+        searchableObjects.add(product5);
+        searchableObjects.add(product6);
+        searchableObjects.add(product7);
+        searchableObjects.add(product8);
+        searchableObjects.add(product9);
+        searchableObjects.add(product10);
+        searchableObjects.add(product11);
+        searchableObjects.add(product12);
+        searchableObjects.add(article1);
+        searchableObjects.add(article2);
+        searchableObjects.add(article3);
+        searchableObjects.add(article4);
+        searchableObjects.add(article5);
+        searchableObjects.add(article6);
 
         // поиск...
-        Searchable[] searchResult = searchEngine.search("чай");
+        Searchable[] searchResult = searchableObjects.search("чай");
         System.out.println(Arrays.toString(searchResult));
 
-        Searchable[] searchResult2 = searchEngine.search("кофе");
+        Searchable[] searchResult2 = searchableObjects.search("кофе");
         System.out.println(Arrays.toString(searchResult2));
 
-        Searchable[] searchResult3 = searchEngine.search("сок");
+        Searchable[] searchResult3 = searchableObjects.search("сок");
         System.out.println(Arrays.toString(searchResult3));
 
-        Searchable[] searchResult4 = searchEngine.search("мясо");
+        Searchable[] searchResult4 = searchableObjects.search("мясо");
         System.out.println(Arrays.toString(searchResult4));
-
     }
 
 }
