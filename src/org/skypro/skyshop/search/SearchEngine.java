@@ -45,8 +45,8 @@ public class SearchEngine {
     }
 
     // поиск самого подходящего элемента к поисковой строке
-    public Searchable[] searchElement(String searchElements) throws BestResultNotFound {
-        Searchable[] bestResultSearch = new Searchable[1];
+    public Searchable searchElement(String searchElements) throws BestResultNotFound {
+        Searchable bestResultSearch = null;
         int found = 0;
         for (Searchable object : searchableObjects) {
             if (object != null) {
@@ -56,13 +56,15 @@ public class SearchEngine {
                     String substring = searchElements.toLowerCase();
                     maxFound = maxReplay(stringSearch, substring);
                     found = maxFound;
-                    bestResultSearch[found] = object;
-                } else {
-                    throw new BestResultNotFound("Нет соответствующего запросу элемента"); // почему объект null ?! Searchable[] заполнен объектами
+                    bestResultSearch = object;
                 }
             }
         }
+        if (found == 0){
+            throw new BestResultNotFound("Нет соответствующего запросу элемента");
+        }
         return bestResultSearch;
+
     }
 
     private int maxReplay(String stringSearch, String substring) {
@@ -76,7 +78,6 @@ public class SearchEngine {
         }
         return maxFound;
     }
-
 
     //тестовая печать содержимого поисковика
     public void printSearchEngine() {

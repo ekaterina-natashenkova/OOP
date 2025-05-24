@@ -136,11 +136,11 @@ public class App {
             searchableObjects.printSearchEngine();
 
             // поиск подстроки...
-            Searchable[] bestResultSearch1 = searchableObjects.searchElement("мол");
-            System.out.println(Arrays.toString(bestResultSearch1));
+            Searchable bestResultSearch1 = searchableObjects.searchElement("мол");
+            System.out.println(bestResultSearch1);
 
-            Searchable[] bestResultSearch2 = searchableObjects.searchElement("мел");
-            System.out.println(Arrays.toString(bestResultSearch2));
+            Searchable bestResultSearch2 = searchableObjects.searchElement("мел");
+            System.out.println(bestResultSearch2);
 
         } catch (IllegalAccessException exceptions) {
             System.out.println(exceptions.getMessage());
