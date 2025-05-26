@@ -8,7 +8,11 @@ public abstract class Product implements Searchable {
 
     private String titleProduct;
 
-    public Product(String titleProduct) {
+    public Product(String titleProduct) throws IllegalAccessException {
+        if (titleProduct == null || titleProduct.isBlank()){
+            throw new IllegalAccessException("Введено некорректное название продукта");  //  - проверка на null и пустую строку
+        }
+
         this.titleProduct = titleProduct;
     }
 

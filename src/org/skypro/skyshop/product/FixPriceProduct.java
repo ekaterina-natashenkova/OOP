@@ -4,7 +4,7 @@ public class FixPriceProduct extends Product {
 
     private static final double FIX_PRICE_PRODUCT = 50;
 
-    public FixPriceProduct(String titleProduct) {
+    public FixPriceProduct(String titleProduct) throws IllegalAccessException {
         super(titleProduct);
     }
 
