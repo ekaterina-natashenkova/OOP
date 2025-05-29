@@ -1,54 +1,64 @@
 package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
+import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.search.Searchable;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchEngine {
 
 //Поле Searchable[] — массив всех элементов, по которым можно искать. Размерность массива нужно передавать через конструктор класса SearchEngine
 //Метод search — принимает в себя строку для поиска и возвращает 5 результатов поиска по массиву Searchable в виде массива из 5 элементов.
 //Метод add() — добавляет новый объект типа Searchable в массив поискового движка.
+// Замена объекта Searchable[] на List и соответствующая корректировка методов для работы с новой сущностью
 
 //Для тестирования:
 //Создайте один объект типа SearchEngine и добавьте в него все товары, которые создаются для проверки других методов.
 //Создайте несколько объектов типа Article и добавьте их в Search Engine
 //Продемонстрируйте функциональность поиска с помощью объекта SearchEngine: вызовите метод search несколько раз с разными строками поиска.
 
-    private final Searchable[] searchableObjects;
+    private final List<Searchable> searchableObjects;
     private int count;
 
-    public SearchEngine(int size) {
-        searchableObjects = new Searchable[size];
+    public SearchEngine() {
+        this.searchableObjects = new LinkedList<>();
         count = 0;
     }
 
     public void add(Searchable object) {
-        if (count < searchableObjects.length) {
-            searchableObjects[count] = object;
-            count++;
-        }
+        searchableObjects.add(object);
+        System.out.println("Продукт добавлен в поиск"); // ИСПРАВЛЕНО ДЛЯ КОЛЛЕКЦИИ
+        count++;
     }
 
-    public Searchable[] search(String searchObject) {
-        Searchable[] resultsSearch = new Searchable[5];
-        int resultCount = 0;
-        for (Searchable object : searchableObjects) {
+    public List<Searchable> search(String searchObject) throws BestResultNotFound {
+        List<Searchable> resultsSearch = new LinkedList<>();
+        Iterator<Searchable> iterator = searchableObjects.iterator();
+        while (iterator.hasNext()) {
+            Searchable object = iterator.next();
             if (object != null && object.getSearchTerm().contains(searchObject)) {
-                if (resultCount < 5) {
-                    resultsSearch[resultCount] = object;
-                    resultCount++;
-                } else {
-                    break;
-                }
+                resultsSearch.add(object);
+            } else {
+                break;
             }
+        }
+        if (resultsSearch.isEmpty()) {
+            throw new BestResultNotFound("Нет соответствующих запросу элементов");
         }
         return resultsSearch;
     }
+
 
     // поиск самого подходящего элемента к поисковой строке
     public Searchable searchElement(String searchElements) throws BestResultNotFound {
         Searchable bestResultSearch = null;
         int found = 0;
-        for (Searchable object : searchableObjects) {
+        Iterator<Searchable> iterator = searchableObjects.iterator();
+        while (iterator.hasNext()) {
+            Searchable object = iterator.next();
             if (object != null) {
                 int maxFound = maxReplay(object.getSearchTerm(), searchElements);
                 if (maxFound > found) {
@@ -81,11 +91,9 @@ public class SearchEngine {
 
     //тестовая печать содержимого поисковика
     public void printSearchEngine() {
-        for (int i = 0; i < searchableObjects.length; i++) {
-            if (searchableObjects[i] != null) {
-                System.out.println(searchableObjects[i]);
-            }
+        Iterator<Searchable> iterator = searchableObjects.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(searchableObjects);
         }
     }
-
 }
