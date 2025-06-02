@@ -11,6 +11,8 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -29,6 +31,7 @@ public class App {
 
             // Добавление продуктов в корзину
             // п.1.2. // Добавление продукта в корзину.// Добавление продукта в заполненную корзину, в которой нет свободного места.
+            // Код для удаления продуктов в корзину (массив) удален, ввиду изменения сущности объекта на Лист
             basket.addProduct(product1);
             basket.addProduct(product2);
             basket.addProduct(product3);
@@ -49,6 +52,11 @@ public class App {
             // п.5.6. // Поиск товара, который есть в корзине. // Поиск товара, которого нет в корзине.
             System.out.println(basket.faindTitleProductBasket("чай"));
             System.out.println(basket.faindTitleProductBasket("кефир"));
+            System.out.println(basket.faindTitleProductBasket("морс"));
+
+            // Удаление продукта по имени
+            basket.removeProduct("вода");
+            basket.removeProduct("морс");
 
             // Очистка корзины
             // п.7.8.9.10 //Очистка корзины. // Печать содержимого пустой корзины. // Получение стоимости пустой корзины. // Поиск товара по имени в пустой корзине.
@@ -74,7 +82,7 @@ public class App {
             Searchable product12 = new FixPriceProduct("сок томатный");
 
             // Создание объекта SearchEngine для заполнения его товарами и статьями о них - увеличила размер массива поисковика с 20 на 25
-            SearchEngine searchableObjects = new SearchEngine(25);
+            SearchEngine searchableObjects = new SearchEngine();
 
             // Добавление объектов в SearchEngine
             searchableObjects.add(product1);
@@ -97,20 +105,20 @@ public class App {
             searchableObjects.add(article6);
 
             // поиск объектов...
-            Searchable[] searchResult = searchableObjects.search("чай");
-            System.out.println(Arrays.toString(searchResult));
+            List<Searchable> searchResult = searchableObjects.search("чай");
+            System.out.println(searchResult);
 
-            Searchable[] searchResult2 = searchableObjects.search("кофе");
-            System.out.println(Arrays.toString(searchResult2));
+            List<Searchable> searchResult2 = searchableObjects.search("кофе");
+            System.out.println(searchResult2);
 
-            Searchable[] searchResult3 = searchableObjects.search("сок");
-            System.out.println(Arrays.toString(searchResult3));
+            List<Searchable> searchResult3 = searchableObjects.search("сок");
+            System.out.println(searchResult3);
 
-            Searchable[] searchResult4 = searchableObjects.search("мясо");
-            System.out.println(Arrays.toString(searchResult4));
+            List<Searchable> searchResult4 = searchableObjects.search("мясо");
+            System.out.println(searchResult4);
 
-            Searchable[] searchResult5 = searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
-            System.out.println(Arrays.toString(searchResult5));
+            List<Searchable> searchResult5 = searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
+            System.out.println(searchResult5);
 
 
             //создание дополнительных продуктов для проверки исключений
@@ -129,8 +137,8 @@ public class App {
             searchableObjects.add(product16);
             searchableObjects.add(product17);
 
-            Searchable[] searchResult6 = searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
-            System.out.println(Arrays.toString(searchResult6));
+            List<Searchable> searchResult6 = searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
+            System.out.println(searchResult6);
 
             //тестовая печать содержимое поисковика
             searchableObjects.printSearchEngine();
