@@ -13,6 +13,7 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -105,19 +106,19 @@ public class App {
             searchableObjects.add(article6);
 
             // поиск объектов...
-            List<Searchable> searchResult = searchableObjects.search("чай");
+            Map<String, Searchable> searchResult = searchableObjects.search("чай");
             System.out.println(searchResult);
 
-            List<Searchable> searchResult2 = searchableObjects.search("кофе");
+            Map<String, Searchable> searchResult2 = searchableObjects.search("кофе");
             System.out.println(searchResult2);
 
-            List<Searchable> searchResult3 = searchableObjects.search("сок");
+            Map<String, Searchable> searchResult3 = searchableObjects.search("сок");
             System.out.println(searchResult3);
 
-            List<Searchable> searchResult4 = searchableObjects.search("мясо");
+            Map<String, Searchable> searchResult4 = searchableObjects.search("мясо");
             System.out.println(searchResult4);
 
-            List<Searchable> searchResult5 = searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
+            Map<String, Searchable> searchResult5 = searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
             System.out.println(searchResult5);
 
 
@@ -137,7 +138,7 @@ public class App {
             searchableObjects.add(product16);
             searchableObjects.add(product17);
 
-            List<Searchable> searchResult6 = searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
+            Map<String, Searchable> searchResult6 = searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
             System.out.println(searchResult6);
 
             //тестовая печать содержимое поисковика
