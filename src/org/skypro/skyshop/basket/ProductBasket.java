@@ -5,90 +5,105 @@ import org.skypro.skyshop.product.Product;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ProductBasket {
 
-    private List<Product> basket;
+    private Map<String, List<Product>> basket;
 
     public ProductBasket() {
-        this.basket = new LinkedList<>();
+        this.basket = new TreeMap<>();
     }
 
     // Метод добавления продукта в корзину: метод принимает в себя продукт и ничего не возвращает.
-    // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист
+    // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист / на Map
     public void addProduct(Product product) {
-        basket.add(product);
-        System.out.println("Продукт добавлен в корзину"); // ИСПРАВЛЕНО ДЛЯ КОЛЛЕКЦИИ
+        List<Product> products = basket.getOrDefault(product.getTitleProduct(), new LinkedList<>());
+        products.add(product);
+        basket.put(product.getTitleProduct(), products);
+        System.out.println("Продукт добавлен в корзину");
     }
 
     // Метод получения общей стоимости корзины: метод ничего не принимает и возвращает целое число.
     // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист
     public double getCostBasket() {
-        Iterator<Product> iterator = basket.iterator();
         double costBasket = 0;
-        while (iterator.hasNext()) {
-            Product element = iterator.next();
-            costBasket += element.getPriceProduct();
+        for (List<Product> products : basket.values()) {
+            for (Product product : products) {
+                costBasket += product.getPriceProduct();
+            }
         }
-        return costBasket; // ИСПРАВЛЕНО ДЛЯ КОЛЛЕКЦИИ (с итератором)
+        return costBasket;
     }
 
     // Метод, который печатает содержимое корзины: метод ничего не принимает и не возвращает, но печатает в консоль сообщение вида:
     //<имя продукта>: <стоимость> / Итого: <общая стоимость корзины> / Если в корзине ничего нет, нужно напечатать фразу «в корзине пусто».
     // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист
+    // ВОПРОС ??? Будет ли работать печать корзины, если вместо 2-х циклов написать: "list.forEach(System.out::println);" ???
+    // ВОПРОС ??? И еще нашла вариант печати списка через стрим, так же вместо 2-х циклов - "list.stream().forEach(System.out::println);" ???
     public void printBasket() {
-        Iterator<Product> iterator = basket.iterator();
-        while (iterator.hasNext()) {
-            Product element = iterator.next();
-            System.out.println(element);
+        for (List<Product> products : basket.values()) {
+            for (Product product : products) {
+                System.out.println(product);
+            }
         }
-        System.out.println("Итого: " + getCostBasket()); // ИСПРАВЛЕНО ДЛЯ КОЛЛЕКЦИИ (с итератором)
+        System.out.println("Итого: " + getCostBasket());
     }
 
     // вызов метода подсчета количества товаров специального типа, с выводом сообщения в консоль в заданном виде
     // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист
-    public void getCountSpecialProduct() {
+    public int getCountSpecialProduct() {
         int countSpecialProduct = 0;
-        Iterator<Product> iterator = basket.iterator();
-        while (iterator.hasNext()) {
-            Product element = iterator.next();
+        for (List<Product> products : basket.values()) {
+            for (Product product : products) {
+                if (product.isSpecial()) {
+                    countSpecialProduct++;
+                }
+            }
+
         }
-        countSpecialProduct++;
-        System.out.println("Специальных товаров: " + countSpecialProduct); // ИСПРАВЛЕНО ДЛЯ КОЛЛЕКЦИИ (с итератором)
+        System.out.println("Специальных товаров в корзине " + countSpecialProduct);
+        return countSpecialProduct;
     }
 
     // Метод, проверяющий продукт в корзине по имени: метод принимает в себя строку имени и возвращает boolean в зависимости от того, есть продукт в корзине или его нет.
     // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист
     public boolean faindTitleProductBasket(String titleProduct) {
-        if (basket.contains(titleProduct)) {
-            System.out.println("В корзине есть искомый продукт");
-            return true;
+        for (List<Product> products : basket.values()) {
+            if (products.contains(titleProduct)) {
+                System.out.println("В корзине есть искомый продукт");
+                return true;
+            }
         }
-        return false; // ИСПРАВЛЕНО ДЛЯ КОЛЛЕКЦИИ
+        return false;
     }
 
     // Метод очистки корзины: метод ничего не принимает и очищает массив, проставляя всем его элементам null
     // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист
     public void clearBasket() {
         basket.clear();
-        System.out.println("Корзина очищена"); // ИСПРАВЛЕНО ДЛЯ КОЛЛЕКЦИИ
+        System.out.println("Корзина очищена");
     }
 
-    // Метод удаления продукта по имени из корзины
-    public List<Product> removeProduct(String name) {
-        List<Product> removedProduct = new LinkedList<>();
-        Iterator<Product> iterator = basket.iterator();
+    // Метод удаления продукта по имени из корзины // по ключу
+    public List<Product> removeProduct(String nameKey) {
+        List<Product> removeProduct = new LinkedList<>();
+        Iterator<Map.Entry<String, List<Product>>> iterator = basket.entrySet().iterator();
         while (iterator.hasNext()) {
-            Product product = iterator.next();
-            if (product != null && product.getTitleProduct().equals(name)) {
-                removedProduct.add(product);
+            Map.Entry<String, List<Product>> product = iterator.next();
+            List<Product> tempProduct = product.getValue();
+            if (tempProduct.listIterator().equals(nameKey)) {
+                System.out.printf("Продукт " + tempProduct.listIterator() + " готов к удалению");
+                removeProduct.add((Product) tempProduct);
                 iterator.remove();
             }
         }
-        if (removedProduct.isEmpty()) {
+        if (removeProduct.isEmpty()) {
             System.out.println("Список пуст");
         }
-        return removedProduct;
+        return removeProduct;
     }
+
 
 }
