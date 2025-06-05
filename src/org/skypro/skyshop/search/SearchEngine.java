@@ -4,43 +4,41 @@ import org.skypro.skyshop.Exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.search.SearchComparator;
 
-import java.util.*;
+import java.util.Set;
+import java.util.TreeSet; // почему тут вместо отдельно прописанных импортов коллекций появляется одна строка и символ * ???
 
 public class SearchEngine {
 
-//Поле Searchable[] — массив всех элементов, по которым можно искать. Размерность массива нужно передавать через конструктор класса SearchEngine
 //Метод search — принимает в себя строку для поиска и возвращает 5 результатов поиска по массиву Searchable в виде массива из 5 элементов.
 //Метод add() — добавляет новый объект типа Searchable в массив поискового движка.
-// Замена объекта Searchable[] на List и соответствующая корректировка методов для работы с новой сущностью // замена на Мар
+// Замена объекта Searchable[] на List и соответствующая корректировка методов для работы с новой сущностью // замена на Мар // замена на Set
 
 //Для тестирования:
 //Создайте один объект типа SearchEngine и добавьте в него все товары, которые создаются для проверки других методов.
 //Создайте несколько объектов типа Article и добавьте их в Search Engine
 //Продемонстрируйте функциональность поиска с помощью объекта SearchEngine: вызовите метод search несколько раз с разными строками поиска.
 
-    private Map<String, Searchable> searchableObjects;
+    private Set<Searchable> searchableObjects;
     private int count;
 
     public SearchEngine() {
-        this.searchableObjects = new TreeMap<>();
+        this.searchableObjects = new TreeSet<>();
         count = 0;
     }
 
     public void add(Searchable object) {
-        Map<String, Searchable> searchableObjects = new TreeMap<>();
-        searchableObjects.put(object.getSearchTerm(), object);
+        searchableObjects.add(object);
         System.out.println("Продукт добавлен в поиск");
         count++;
     }
 
-    public Map<String, Searchable> search(String searchObject) throws BestResultNotFound {
-        Map<String, Searchable> resultsSearch = new TreeMap<>();
-        for (Map.Entry<String, Searchable> object : searchableObjects.entrySet()) {
-            String key = object.getKey();
-            Searchable value = object.getValue();
-            if (object != null && searchableObjects.containsKey(searchObject)) {
-                resultsSearch.put(key, value);
+    public Set<Searchable> search(String searchObject) throws BestResultNotFound {
+        Set<Searchable> resultsSearch = new TreeSet<>(new SearchComparator());
+        for (Searchable object : searchableObjects) {
+            if (object != null && object.getSearchTerm().contains(searchObject)) {
+                resultsSearch.add(object);
             }
         }
         if (resultsSearch.isEmpty()) {
@@ -53,15 +51,15 @@ public class SearchEngine {
     public Searchable searchElement(String searchElements) throws BestResultNotFound {
         Searchable bestResultSearch = null;
         int found = 0;
-        for (Map.Entry<String, Searchable> object : searchableObjects.entrySet()) {
+        for (Searchable object : searchableObjects) {
             if (object != null) {
-                int maxFound = maxReplay(String.valueOf(object.getValue()), searchElements);
+                int maxFound = maxReplay(object.getSearchTerm(), searchElements);
                 if (maxFound > found) {
-                    String stringSearch = String.valueOf(object.getValue()).toLowerCase();
+                    String stringSearch = object.getSearchTerm().toLowerCase();
                     String substring = searchElements.toLowerCase();
                     maxFound = maxReplay(stringSearch, substring);
                     found = maxFound;
-                    bestResultSearch = (Searchable) object;
+                    bestResultSearch = object;
                 }
             }
         }
@@ -85,8 +83,8 @@ public class SearchEngine {
 
     //тестовая печать содержимого поисковика
     public void printSearchEngine() {
-        for (Map.Entry<String, Searchable> searchables : searchableObjects.entrySet()) {
-            System.out.println(searchables);
+        for (Searchable searchable : searchableObjects) {
+            System.out.println(searchable);
         }
     }
 

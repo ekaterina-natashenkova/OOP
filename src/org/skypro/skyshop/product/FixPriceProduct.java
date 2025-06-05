@@ -23,4 +23,9 @@ public class FixPriceProduct extends Product {
         return getTitleProduct() + ": Фиксированная цена " + FIX_PRICE_PRODUCT;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
+
 }
