@@ -4,7 +4,7 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.Objects;
 
-public abstract class Product implements Searchable {
+public abstract class Product implements Searchable, Comparable {
 
     private String titleProduct;
 
@@ -12,7 +12,6 @@ public abstract class Product implements Searchable {
         if (titleProduct == null || titleProduct.isBlank()){
             throw new IllegalAccessException("Введено некорректное название продукта");  //  - проверка на null и пустую строку
         }
-
         this.titleProduct = titleProduct;
     }
 
@@ -50,6 +49,11 @@ public abstract class Product implements Searchable {
     @Override
     public int hashCode() {
         return Objects.hashCode(titleProduct);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 
 }

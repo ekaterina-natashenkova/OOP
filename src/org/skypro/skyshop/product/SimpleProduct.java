@@ -27,4 +27,9 @@ public class SimpleProduct extends Product {
         return getTitleProduct() + ": " + priceProduct;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
+
 }

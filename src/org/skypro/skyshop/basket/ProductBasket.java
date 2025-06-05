@@ -40,8 +40,7 @@ public class ProductBasket {
     // Метод, который печатает содержимое корзины: метод ничего не принимает и не возвращает, но печатает в консоль сообщение вида:
     //<имя продукта>: <стоимость> / Итого: <общая стоимость корзины> / Если в корзине ничего нет, нужно напечатать фразу «в корзине пусто».
     // Метод для работы с массивом Product[] basket = new Product[5] переписан, ввиду изменения структуры данных с Массива на Лист
-    // ВОПРОС ??? Будет ли работать печать корзины, если вместо 2-х циклов написать: "list.forEach(System.out::println);" ???
-    // ВОПРОС ??? И еще нашла вариант печати списка через стрим, так же вместо 2-х циклов - "list.stream().forEach(System.out::println);" ???
+    // альтернативный вариант печати корзины для Map<k,v> - basket.values().forEach(lst -> lst.forEach(System.out::println));
     public void printBasket() {
         for (List<Product> products : basket.values()) {
             for (Product product : products) {
@@ -61,7 +60,6 @@ public class ProductBasket {
                     countSpecialProduct++;
                 }
             }
-
         }
         System.out.println("Специальных товаров в корзине " + countSpecialProduct);
         return countSpecialProduct;
@@ -104,6 +102,5 @@ public class ProductBasket {
         }
         return removeProduct;
     }
-
 
 }

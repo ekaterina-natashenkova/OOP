@@ -10,10 +10,7 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class App {
     public static void main(String[] args) {
@@ -106,19 +103,19 @@ public class App {
             searchableObjects.add(article6);
 
             // поиск объектов...
-            Map<String, Searchable> searchResult = searchableObjects.search("чай");
+            TreeSet<Searchable> searchResult = (TreeSet<Searchable>) searchableObjects.search("чай");
             System.out.println(searchResult);
 
-            Map<String, Searchable> searchResult2 = searchableObjects.search("кофе");
+            TreeSet<Searchable> searchResult2 = (TreeSet<Searchable>) searchableObjects.search("кофе");
             System.out.println(searchResult2);
 
-            Map<String, Searchable> searchResult3 = searchableObjects.search("сок");
+            TreeSet<Searchable> searchResult3 = (TreeSet<Searchable>) searchableObjects.search("сок");
             System.out.println(searchResult3);
 
-            Map<String, Searchable> searchResult4 = searchableObjects.search("мясо");
+            TreeSet<Searchable> searchResult4 = (TreeSet<Searchable>) searchableObjects.search("мясо");
             System.out.println(searchResult4);
 
-            Map<String, Searchable> searchResult5 = searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
+            TreeSet<Searchable> searchResult5 = (TreeSet<Searchable>) searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
             System.out.println(searchResult5);
 
 
@@ -138,7 +135,7 @@ public class App {
             searchableObjects.add(product16);
             searchableObjects.add(product17);
 
-            Map<String, Searchable> searchResult6 = searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
+            TreeSet<Searchable> searchResult6 = (TreeSet<Searchable>) searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
             System.out.println(searchResult6);
 
             //тестовая печать содержимое поисковика
