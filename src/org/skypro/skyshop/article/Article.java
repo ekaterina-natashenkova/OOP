@@ -4,7 +4,7 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.Objects;
 
-public final class Article implements Searchable, Comparable {
+public final class Article implements Searchable {
 
     private String titleArticle;
     private String textArticle;
@@ -50,9 +50,5 @@ public final class Article implements Searchable, Comparable {
         return Objects.hash(titleArticle);
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 
 }

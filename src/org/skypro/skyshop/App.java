@@ -10,7 +10,8 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.*;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class App {
     public static void main(String[] args) {
@@ -103,19 +104,19 @@ public class App {
             searchableObjects.add(article6);
 
             // поиск объектов...
-            TreeSet<Searchable> searchResult = (TreeSet<Searchable>) searchableObjects.search("чай");
+            Set<Searchable> searchResult = searchableObjects.search("чай");
             System.out.println(searchResult);
 
-            TreeSet<Searchable> searchResult2 = (TreeSet<Searchable>) searchableObjects.search("кофе");
+            Set<Searchable> searchResult2 = searchableObjects.search("кофе");
             System.out.println(searchResult2);
 
-            TreeSet<Searchable> searchResult3 = (TreeSet<Searchable>) searchableObjects.search("сок");
+            Set<Searchable> searchResult3 = searchableObjects.search("сок");
             System.out.println(searchResult3);
 
-            TreeSet<Searchable> searchResult4 = (TreeSet<Searchable>) searchableObjects.search("мясо");
+            Set<Searchable> searchResult4 = searchableObjects.search("мясо");
             System.out.println(searchResult4);
 
-            TreeSet<Searchable> searchResult5 = (TreeSet<Searchable>) searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
+            Set<Searchable> searchResult5 = searchableObjects.search("морс"); // не ищет, т.к. продукт в поисковик добавляется позже
             System.out.println(searchResult5);
 
 
@@ -135,7 +136,7 @@ public class App {
             searchableObjects.add(product16);
             searchableObjects.add(product17);
 
-            TreeSet<Searchable> searchResult6 = (TreeSet<Searchable>) searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
+            Set<Searchable> searchResult6 = searchableObjects.search("морс"); // тестовый поиск после добавления новых продуктов
             System.out.println(searchResult6);
 
             //тестовая печать содержимое поисковика

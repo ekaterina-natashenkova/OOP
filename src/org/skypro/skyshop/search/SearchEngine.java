@@ -4,8 +4,9 @@ import org.skypro.skyshop.Exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.Searchable;
-import org.skypro.skyshop.search.SearchComparator;
 
+import java.util.Comparator;
+import java.lang.Comparable;
 import java.util.Set;
 import java.util.TreeSet; // почему тут вместо отдельно прописанных импортов коллекций появляется одна строка и символ * ???
 
@@ -29,13 +30,25 @@ public class SearchEngine {
     }
 
     public void add(Searchable object) {
+        Set<Searchable> searchableObjects = new TreeSet<>(new Comparator<Searchable>() {
+            @Override
+            public int compare(Searchable o1, Searchable o2) {
+                return o1.getSearchTerm().compareTo(o2.getSearchTerm());
+            }
+        });
         searchableObjects.add(object);
         System.out.println("Продукт добавлен в поиск");
         count++;
     }
 
     public Set<Searchable> search(String searchObject) throws BestResultNotFound {
-        Set<Searchable> resultsSearch = new TreeSet<>(new SearchComparator());
+        Set<Searchable> resultsSearch = new TreeSet<>((s1, s2) -> { // IDEA сама предложила поменять компаратор на лямбду
+            int searchCompare = Integer.compare(s2.getSearchTerm().length(), s1.getSearchTerm().length());
+            if (searchCompare == 0) {
+                return s1.getSearchTerm().compareTo(s2.getSearchTerm());
+            }
+            return searchCompare;
+        });
         for (Searchable object : searchableObjects) {
             if (object != null && object.getSearchTerm().contains(searchObject)) {
                 resultsSearch.add(object);

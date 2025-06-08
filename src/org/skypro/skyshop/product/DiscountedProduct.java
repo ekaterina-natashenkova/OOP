@@ -32,9 +32,5 @@ public class DiscountedProduct extends Product {
         return getTitleProduct() + ": " + getPriceProduct() + "(" + percantPriceProduct + " %)";
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 
 }
