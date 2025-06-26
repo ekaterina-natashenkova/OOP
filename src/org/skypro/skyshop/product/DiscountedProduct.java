@@ -32,4 +32,5 @@ public class DiscountedProduct extends Product {
         return getTitleProduct() + ": " + getPriceProduct() + "(" + percantPriceProduct + " %)";
     }
 
+
 }

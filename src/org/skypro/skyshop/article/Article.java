@@ -25,7 +25,7 @@ public final class Article implements Searchable {
 
     @Override
     public String getSearchTerm() {
-        return getTitleArticle() + " - " + getTextArticle();
+        return getTitleArticle();
     }
 
     @Override
@@ -42,12 +42,13 @@ public final class Article implements Searchable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Article article)) return false;
-        return Objects.equals(titleArticle, article.titleArticle) && Objects.equals(textArticle, article.textArticle);
+        return Objects.equals(titleArticle, article.titleArticle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(titleArticle, textArticle);
+        return Objects.hash(titleArticle);
     }
+
 
 }

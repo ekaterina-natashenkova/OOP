@@ -12,7 +12,6 @@ public abstract class Product implements Searchable {
         if (titleProduct == null || titleProduct.isBlank()){
             throw new IllegalAccessException("Введено некорректное название продукта");  //  - проверка на null и пустую строку
         }
-
         this.titleProduct = titleProduct;
     }
 
@@ -51,5 +50,6 @@ public abstract class Product implements Searchable {
     public int hashCode() {
         return Objects.hashCode(titleProduct);
     }
+
 
 }
