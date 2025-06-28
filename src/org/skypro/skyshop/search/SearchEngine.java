@@ -7,14 +7,14 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.Comparator;
 import java.lang.Comparable;
-import java.util.Set;
-import java.util.TreeSet; // почему тут вместо отдельно прописанных импортов коллекций появляется одна строка и символ * ???
+import java.util.HashSet;
+import java.util.Set; // почему нельзя импортировать только Set, ведь он по иерархии "выше" чем HashSet и TreeSet, но при импорте только Set то код не компилируется
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import static java.util.stream.StreamSupport.stream;
 
 public class SearchEngine {
-
-//Метод search — принимает в себя строку для поиска и возвращает 5 результатов поиска по массиву Searchable в виде массива из 5 элементов.
-//Метод add() — добавляет новый объект типа Searchable в массив поискового движка.
-// Замена объекта Searchable[] на List и соответствующая корректировка методов для работы с новой сущностью // замена на Мар // замена на Set
 
 //Для тестирования:
 //Создайте один объект типа SearchEngine и добавьте в него все товары, которые создаются для проверки других методов.
@@ -25,35 +25,27 @@ public class SearchEngine {
     private int count;
 
     public SearchEngine() {
-        this.searchableObjects = new TreeSet<>();
+        this.searchableObjects = new HashSet<>();
         count = 0;
     }
 
     public void add(Searchable object) {
-        Set<Searchable> searchableObjects = new TreeSet<>(new Comparator<Searchable>() {
-            @Override
-            public int compare(Searchable o1, Searchable o2) {
-                return o1.getSearchTerm().compareTo(o2.getSearchTerm());
-            }
-        });
+        Set<Searchable> searchableObjects = new HashSet<>();
         searchableObjects.add(object);
         System.out.println("Продукт добавлен в поиск");
         count++;
     }
 
     public Set<Searchable> search(String searchObject) throws BestResultNotFound {
-        Set<Searchable> resultsSearch = new TreeSet<>((s1, s2) -> { // IDEA сама предложила поменять компаратор на лямбду
-            int searchCompare = Integer.compare(s2.getSearchTerm().length(), s1.getSearchTerm().length());
-            if (searchCompare == 0) {
-                return s1.getSearchTerm().compareTo(s2.getSearchTerm());
-            }
-            return searchCompare;
-        });
-        for (Searchable object : searchableObjects) {
-            if (object != null && object.getSearchTerm().contains(searchObject)) {
-                resultsSearch.add(object);
-            }
-        }
+        Set<Searchable> resultsSearch = searchableObjects.stream()
+                .filter(object -> searchableObjects.iterator().equals(searchObject))
+                .collect(Collectors.toCollection(() -> new TreeSet<>((s1, s2) -> { // компаратор хочется как-то "ужать"...
+                    int searchCompare = Integer.compare(s2.getSearchTerm().length(), s1.getSearchTerm().length());
+                    if (searchCompare == 0) {
+                        return s1.getSearchTerm().compareTo(s2.getSearchTerm());
+                    }
+                    return searchCompare;
+                })));
         if (resultsSearch.isEmpty()) {
             throw new BestResultNotFound("Нет соответствующих запросу элементов");
         }
